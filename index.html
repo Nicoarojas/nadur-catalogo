@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NADUR · Productos Naturales</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&amp;family=Jost:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --sage:    #4a6741;
+    --sage-lt: #7a9b72;
+    --sage-bg: #eef2ec;
+    --ivory:   #f9f6f0;
+    --warm:    #c8a96e;
+    --dark:    #1e2218;
+    --mid:     #5a5e52;
+    --line:    #d6dbd1;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: "Jost", sans-serif; background: var(--ivory); color: var(--dark); font-weight: 300; line-height: 1.7; }
+
+  .cover { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; }
+  .cover__photo { position: relative; overflow: hidden; }
+  .cover__photo img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(0.9); }
+  .cover__photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to right, transparent 60%, var(--ivory)); }
+  .cover__text { display: flex; flex-direction: column; justify-content: center; padding: 80px 64px 80px 48px; background: var(--ivory); }
+  .cover__eyebrow { font-family: "Jost", sans-serif; font-weight: 400; font-size: 11px; letter-spacing: 0.3em; color: var(--sage); text-transform: uppercase; margin-bottom: 32px; }
+  .cover__title { font-family: "Cormorant Garamond", serif; font-weight: 300; font-size: clamp(52px, 6vw, 88px); line-height: 1.0; color: var(--dark); margin-bottom: 8px; }
+  .cover__title em { font-style: italic; color: var(--sage); }
+  .cover__subtitle { font-family: "Cormorant Garamond", serif; font-size: 22px; font-weight: 300; color: var(--mid); margin-bottom: 48px; letter-spacing: 0.05em; }
+  .cover__rule { width: 64px; height: 1px; background: var(--warm); margin-bottom: 32px; }
+  .cover__tags { display: flex; gap: 24px; font-size: 11px; letter-spacing: 0.2em; color: var(--mid); text-transform: uppercase; }
+
+  .chapter { padding: 80px 64px 0; display: flex; align-items: baseline; gap: 24px; max-width: 1100px; margin: 0 auto; }
+  .chapter__num { font-family: "Cormorant Garamond", serif; font-size: 72px; font-weight: 300; color: var(--line); line-height: 1; min-width: 80px; }
+  .chapter__info { flex: 1; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .chapter__cat { font-size: 10px; letter-spacing: 0.3em; color: var(--sage); text-transform: uppercase; margin-bottom: 4px; }
+  .chapter__title { font-family: "Cormorant Garamond", serif; font-size: clamp(32px, 4vw, 52px); font-weight: 300; line-height: 1.1; }
+
+  .section { max-width: 1100px; margin: 0 auto; padding: 48px 64px 80px; }
+
+  .hero-img { width: 100%; border-radius: 4px; display: block; margin-bottom: 48px; max-height: 480px; object-fit: cover; object-position: center top; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; }
+  .grid-photo-text { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; margin-bottom: 48px; }
+  .grid-photo-text.reverse { direction: rtl; }
+  .grid-photo-text.reverse > * { direction: ltr; }
+
+  .card { background: #fff; padding: 36px 32px; border-left: 2px solid var(--line); margin: 1px; transition: border-color 0.2s; }
+  .card:hover { border-color: var(--sage); }
+  .card__name { font-family: "Cormorant Garamond", serif; font-size: 20px; font-weight: 600; margin-bottom: 12px; color: var(--dark); }
+  .card__desc { font-size: 13.5px; color: var(--mid); line-height: 1.65; }
+
+  .card-photo { background: #fff; overflow: hidden; border-radius: 2px; }
+  .card-photo img { width: 100%; height: 260px; object-fit: cover; display: block; }
+  .card-photo__body { padding: 28px 28px 32px; }
+  .card-photo__name { font-family: "Cormorant Garamond", serif; font-size: 22px; font-weight: 600; margin-bottom: 10px; }
+  .card-photo__desc { font-size: 13.5px; color: var(--mid); line-height: 1.65; }
+
+  .pair__img { width: 100%; height: 360px; object-fit: cover; border-radius: 2px; display: block; }
+  .pair__body { padding: 8px 0; }
+  .pair__name { font-family: "Cormorant Garamond", serif; font-size: 28px; font-weight: 600; margin-bottom: 16px; line-height: 1.1; }
+  .pair__desc { font-size: 14px; color: var(--mid); line-height: 1.7; }
+  .pair__rule { width: 40px; height: 1px; background: var(--warm); margin: 20px 0; }
+
+  .feature-strip { background: var(--sage); color: white; padding: 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; margin: 80px 0 0; }
+  .feature-strip__label { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; opacity: 0.7; margin-bottom: 16px; }
+  .feature-strip__title { font-family: "Cormorant Garamond", serif; font-size: 42px; font-weight: 300; line-height: 1.1; margin-bottom: 16px; }
+  .feature-strip__desc { font-size: 14px; opacity: 0.85; line-height: 1.7; }
+  .feature-strip img { width: 100%; height: 300px; object-fit: cover; border-radius: 2px; opacity: 0.9; }
+
+  .variants { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 48px; }
+  .variant { background: white; padding: 28px 24px 32px; border-top: 3px solid var(--sage-lt); }
+  .variant__name { font-family: "Cormorant Garamond", serif; font-size: 20px; font-weight: 600; margin-bottom: 10px; color: var(--dark); }
+  .variant__desc { font-size: 13px; color: var(--mid); line-height: 1.6; }
+
+  .pets-banner { background: var(--dark); color: white; display: grid; grid-template-columns: 1fr 1fr; min-height: 400px; overflow: hidden; margin: 80px 0 0; }
+  .pets-banner__img img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.7; }
+  .pets-banner__body { padding: 64px 56px; display: flex; flex-direction: column; justify-content: center; }
+  .pets-banner__label { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--sage-lt); margin-bottom: 16px; }
+  .pets-banner__title { font-family: "Cormorant Garamond", serif; font-size: 44px; font-weight: 300; line-height: 1.1; margin-bottom: 24px; }
+  .pets-banner__desc { font-size: 14px; opacity: 0.8; line-height: 1.7; max-width: 380px; }
+  .pets-banner__products { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+  .pets-banner__tag { border: 1px solid rgba(255,255,255,0.3); padding: 6px 14px; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; border-radius: 2px; }
+
+  .back-cover { background: var(--dark); color: white; display: grid; grid-template-columns: 1fr 1fr; min-height: 60vh; overflow: hidden; }
+  .back-cover__img img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.55; }
+  .back-cover__body { padding: 80px 64px; display: flex; flex-direction: column; justify-content: center; }
+  .back-cover__label { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--warm); margin-bottom: 32px; }
+  .back-cover__tagline { font-family: "Cormorant Garamond", serif; font-size: 42px; font-weight: 300; line-height: 1.15; margin-bottom: 40px; }
+  .back-cover__contact { font-size: 28px; font-family: "Cormorant Garamond", serif; letter-spacing: 0.02em; margin-bottom: 8px; color: var(--warm); }
+  .back-cover__name { font-size: 14px; opacity: 0.6; letter-spacing: 0.15em; }
+  .back-cover__rule { width: 48px; height: 1px; background: var(--warm); margin: 32px 0; }
+
+  .mt-48 { margin-top: 48px; }
+  .sage-bg { background: var(--sage-bg); }
+
+  .cover__title { letter-spacing: 0.08em; }
+  .cover__subtitle { color: var(--sage); }
+</style>
+</head>
+<body>
+<section class="cover">
+<div class="cover__photo">
+<img alt="Productos NADUR" src="images/producto-01.png"/>
+</div>
+<div class="cover__text">
+<p class="cover__eyebrow">Catálogo · Colección completa</p>
+<h1 class="cover__title">NADUR</h1>
+<p class="cover__subtitle">Productos naturales para el cuidado cotidiano</p>
+<div class="cover__rule"></div>
+<div class="cover__tags">
+<span>Cuidado personal</span>
+<span>Bienestar</span>
+<span>Hogar</span>
+</div>
+</div>
+</section>
+<div class="chapter">
+<span class="chapter__num">01</span>
+<div class="chapter__info">
+<p class="chapter__cat">Nuestra selección</p>
+<h2 class="chapter__title">Hierbas Naturales</h2>
+</div>
+</div>
+<div class="section">
+<img alt="Hierbas naturales" class="hero-img" src="images/producto-02.jpg"/>
+<div class="grid-2">
+<div class="card"><p class="card__name">Tilo</p><p class="card__desc">Ansiedad, estrés, insomnio, dolores estomacales y congestión.</p></div>
+<div class="card"><p class="card__name">Paramela</p><p class="card__desc">Uso tradicional para dolores reumáticos, molestias digestivas, resfríos y tos.</p></div>
+<div class="card"><p class="card__name">Milenrama</p><p class="card__desc">Problemas estomacales y cólicos menstruales; también se utiliza de forma externa.</p></div>
+<div class="card"><p class="card__name">Rosa Mosqueta</p><p class="card__desc">Cuidado facial, estrías, cicatrices y quemaduras ya cicatrizadas.</p></div>
+<div class="card"><p class="card__name">Lavanda</p><p class="card__desc">Relajante y sedante; antiséptica, cicatrizante, analgésica y antiinflamatoria.</p></div>
+<div class="card"><p class="card__name">Menta</p><p class="card__desc">Digestiva, descongestionante, analgésica, relajante y antibacteriana.</p></div>
+<div class="card"><p class="card__name">Rosa</p><p class="card__desc">Antioxidante, antiinflamatoria, cicatrizante, astringente suave y relajante.</p></div>
+<div class="card"><p class="card__name">Caléndula</p><p class="card__desc">Cicatrizante, antiinflamatoria, antimicrobiana y digestiva.</p></div>
+</div>
+</div>
+<div class="feature-strip">
+<div>
+<p class="feature-strip__label">Productos de la colmena</p>
+<h2 class="feature-strip__title">Miel &amp; Polen</h2>
+<div style="width:40px;height:1px;background:var(--warm);margin:20px 0"></div>
+<p class="feature-strip__desc"><strong>Polen de abeja —</strong> Superalimento rico en proteínas, aminoácidos, vitaminas, enzimas y coenzimas digestivas. Aporta complejo B y 22 tipos de aminoácidos.</p>
+<br/>
+<p class="feature-strip__desc"><strong>Miel cruda —</strong> Sin tratar; conserva enzimas, antioxidantes, aminoácidos, vitaminas y minerales. Ideal combinada con limón, infusiones, vinagre de manzana o canela.</p>
+</div>
+<img alt="Polen de abeja y miel cruda" src="images/producto-03.jpg"/>
+</div>
+<div class="chapter">
+<span class="chapter__num">03</span>
+<div class="chapter__info">
+<p class="chapter__cat">Bienestar</p>
+<h2 class="chapter__title">Ungüentos</h2>
+</div>
+</div>
+<div class="section">
+<div class="grid-photo-text">
+<img alt="Ungüentos de lavanda y caléndula; jarilla y paramela" class="pair__img" src="images/producto-04.jpg"/>
+<div class="pair__body">
+<h3 class="pair__name">Lavanda &amp; Caléndula</h3>
+<div class="pair__rule"></div>
+<p class="pair__desc">Hidratante, antiinflamatorio, antiséptico y cicatrizante. Combina las propiedades calmantes y regeneradoras de ambas hierbas.</p>
+<br/><br/>
+<h3 class="pair__name">Jarilla &amp; Paramela</h3>
+<div class="pair__rule"></div>
+<p class="pair__desc">Potente analgésico, antiinflamatorio y antirreumático. Indicado para dolores articulares y musculares.</p>
+</div>
+</div>
+<div class="grid-2 mt-48">
+<div class="card"><p class="card__name">Llantén</p><p class="card__desc">Cicatrizante, antiinflamatorio, antiséptico y antibacteriano. Para irritaciones, contusiones, moretones y hemorroides externas.</p></div>
+<div class="card"><p class="card__name">Rosa Mosqueta</p><p class="card__desc">Hidratación profunda, regeneración celular y cuidado de rojeces, marcas y líneas de expresión.</p></div>
+<div class="card"><p class="card__name">Malva</p><p class="card__desc">Antiinflamatorio y calmante; hidratante, emoliente, cicatrizante y antioxidante.</p></div>
+<div class="card"><p class="card__name">Caléndula</p><p class="card__desc">Calmante, cicatrizante y humectante. Indicada para irritaciones y quemaduras leves.</p></div>
+</div>
+</div>
+<div class="sage-bg">
+<div class="chapter">
+<span class="chapter__num">04</span>
+<div class="chapter__info">
+<p class="chapter__cat">Cuidado facial</p>
+<h2 class="chapter__title">Tratamientos</h2>
+</div>
+</div>
+<div class="section">
+<div class="grid-2">
+<div class="card-photo">
+<img alt="Serum rejuvenecedor" src="images/producto-05.png"/>
+<div class="card-photo__body">
+<p class="card-photo__name">Serum Rejuvenecedor</p>
+<p class="card-photo__desc">Elaborado con colágeno y elastina para el cuidado del rostro, el tratamiento y la prevención de arrugas.</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:2px">
+<div class="card" style="flex:1"><p class="card__name">Máscara Facial</p><p class="card__desc">Arcilla de caolín y verde con carbón activado. Indicada para limpieza semanal; aporta tersura y frescura al rostro.</p></div>
+<div class="card" style="flex:1"><p class="card__name">Gel Espuma Facial</p><p class="card__desc">Limpiador artesanal suave con agua de rosas, tensioactivos derivados del coco, caolín, glicerina vegetal y goma xántica. Limpia impurezas y maquillaje sin dañar la barrera de la piel.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="chapter">
+<span class="chapter__num">05</span>
+<div class="chapter__info">
+<p class="chapter__cat">Cuidado facial y corporal</p>
+<h2 class="chapter__title">Hidratación &amp; Frescura</h2>
+</div>
+</div>
+<div class="section">
+<div class="grid-2">
+<div class="card-photo">
+<img alt="Bruma facial" src="images/producto-06.png"/>
+<div class="card-photo__body">
+<p class="card-photo__name">Bruma Facial</p>
+<p class="card-photo__desc">Agua de rosas o azahar, glicerina vegetal y cristal de mentol. Tonificante y refrescante.</p>
+</div>
+</div>
+<div class="card-photo">
+<img alt="Crema sedosa" src="images/producto-07.png" style="object-position:right center"/>
+<div class="card-photo__body">
+<p class="card-photo__name">Crema Sedosa</p>
+<p class="card-photo__desc">Para manos secas y agrietadas. Elaborada con cera Lanette y aceites esenciales de rosa o jazmín.</p>
+</div>
+</div>
+</div>
+<div class="grid-3 mt-48" style="gap:2px">
+<div class="card"><p class="card__name">Piel Extra-Seca</p><p class="card__desc">Extractos botánicos, fitoestrógenos y agentes ultrahidratantes. Para rostro y piel con sequedad extrema, incluso durante la menopausia.</p></div>
+<div class="card"><p class="card__name">Regenerativa y Antiséptica</p><p class="card__desc">A base de aloe vera y miel. Indicada para pequeñas heridas, quemaduras y raspaduras.</p></div>
+<div class="card"><p class="card__name">Facial de Noche</p><p class="card__desc">Rosa mosqueta, caléndula y almendras. Nutre, regenera y calma; aporta vitamina E y acción antioxidante.</p></div>
+</div>
+</div>
+<div class="sage-bg">
+<div class="chapter">
+<span class="chapter__num">06</span>
+<div class="chapter__info">
+<p class="chapter__cat">Cuatro variantes</p>
+<h2 class="chapter__title">Cremas Vegetales</h2>
+</div>
+</div>
+<div class="section">
+<img alt="Cremas vegetales" class="hero-img" src="images/producto-08.png"/>
+<div class="variants">
+<div class="variant"><p class="variant__name">Rosas</p><p class="variant__desc">Hidratación profunda; calma irritaciones y rojeces. Acción antioxidante, antiedad y regenerativa.</p></div>
+<div class="variant"><p class="variant__name">Jazmín</p><p class="variant__desc">Hidrata; acción calmante, cicatrizante y antiséptica. Prevención del acné.</p></div>
+<div class="variant"><p class="variant__name">Tea-tree</p><p class="variant__desc">Para acné, exceso de sebo, granitos, hongos, irritaciones, picor y quemaduras leves.</p></div>
+<div class="variant"><p class="variant__name">Coco &amp; Vainilla</p><p class="variant__desc">Hidratación profunda, acción calmante y antioxidante.</p></div>
+</div>
+</div>
+</div>
+<div class="chapter">
+<span class="chapter__num">07</span>
+<div class="chapter__info">
+<p class="chapter__cat">Uso cotidiano</p>
+<h2 class="chapter__title">Higiene Personal</h2>
+</div>
+</div>
+<div class="section">
+<div class="grid-2">
+<div class="card-photo">
+<img alt="Desodorantes roll-on" src="images/producto-09.png"/>
+<div class="card-photo__body">
+<p class="card-photo__name">Desodorantes Roll-on</p>
+<p class="card-photo__desc">Con piedra de alumbre, tea-tree, agua y lavanda o menta. No obstruyen los poros, aptos para piel sensible y no manchan. Variante masculina (menta) y femeninas.</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:2px">
+<div class="card" style="flex:1"><p class="card__name">Bálsamo Labial</p><p class="card__desc">Elaborado con cera de abeja, aceite de caléndula y manteca de cacao.</p></div>
+<div class="card" style="flex:1"><p class="card__name">Talco</p><p class="card__desc">Con almidón de maíz, bicarbonato, caolín y tea-tree. Desodorante, absorbente de humedad, antiséptico, antihongos y antibacteriano.</p></div>
+<div class="card" style="flex:1"><p class="card__name">Alcohol en Gel</p><p class="card__desc">Higienizante confirmado para el catálogo.</p></div>
+</div>
+</div>
+</div>
+<div class="sage-bg">
+<div class="chapter">
+<span class="chapter__num">08</span>
+<div class="chapter__info">
+<p class="chapter__cat">Botánica y aromas</p>
+<h2 class="chapter__title">Aceites &amp; Aguas</h2>
+</div>
+</div>
+<div class="section">
+<div class="grid-photo-text">
+<img alt="Aceites esenciales" class="pair__img" src="images/producto-10.png"/>
+<div class="pair__body">
+<h3 class="pair__name">Aceites Esenciales</h3>
+<div class="pair__rule"></div>
+<p class="pair__desc"><strong>Hipérico / Hierba de San Juan —</strong> Cicatrizante, reparador, antiinflamatorio y calmante; uso muscular y articular. Fotosensibilizante: preferiblemente de noche.</p>
+<br/>
+<p class="pair__desc"><strong>Caléndula y jojoba —</strong> Hidratación equilibrada, regulación de grasitud, acción calmante, antiinflamatoria y antioxidante.</p>
+<br/>
+<p class="pair__desc"><strong>Almendra y rosa mosqueta —</strong> Hidratante, regenerador y nutritivo para piel seca o sensible y cabello; aporta vitaminas A y E.</p>
+</div>
+</div>
+<div class="grid-2 mt-48">
+<div class="card"><p class="card__name">Aguas Floridas</p><p class="card__desc">Hidrolatos obtenidos por arrastre de vapor, con trazas activas de aceites esenciales y notas florales. Para bienestar físico, limpieza energética y uso en el hogar o ambientes.</p></div>
+<div class="card"><p class="card__name">Agua Micelar</p><p class="card__desc">Limpieza micelar suave. Disponible en variantes de azahar y rosa.</p></div>
+</div>
+</div>
+</div>
+<div class="chapter">
+<span class="chapter__num">09</span>
+<div class="chapter__info">
+<p class="chapter__cat">Aromas y limpieza</p>
+<h2 class="chapter__title">Aromas &amp; Jabones</h2>
+</div>
+</div>
+<div class="section">
+<div class="grid-2">
+<div class="card-photo">
+<img alt="Aromatizante para auto" src="images/producto-11.png"/>
+<div class="card-photo__body">
+<p class="card-photo__name">Aromatizante para Auto</p>
+<p class="card-photo__desc">Elaborado a base de un popurrí de esencias, pensado para perfumar el interior del vehículo y aportar un aroma agradable y duradero.</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:2px">
+<div class="card" style="flex:1"><p class="card__name">Jabón Antiacné</p><p class="card__desc">Elaborado con glicerina vegetal, carbón activado y propóleo.</p></div>
+<div class="card" style="flex:1"><p class="card__name">Jabones Naturales</p><p class="card__desc">Elaborados con hidrolatos, aceite de coco y hierbas, o con glicerina vegetal y hierbas. 100% naturales.</p></div>
+</div>
+</div>
+</div>
+<div class="sage-bg">
+<div class="chapter">
+<span class="chapter__num">10</span>
+<div class="chapter__info">
+<p class="chapter__cat">Cuidado y artesanía</p>
+<h2 class="chapter__title">Cabello &amp; Cera</h2>
+</div>
+</div>
+<div class="section">
+<div class="grid-photo-text reverse">
+<div class="pair__body">
+<h3 class="pair__name">Shampú + Acondicionador</h3>
+<div class="pair__rule"></div>
+<p class="pair__desc">Shampú con aceites de argán, jojoba y almendra, sin detergentes y saponificado a base de coco. Para caída, caspa y cabello con color. Acondicionador a base de manteca de karité, cera virgen y derivados del coco; aporta suavidad y brillo.</p>
+</div>
+<img alt="Shampú y acondicionador" class="pair__img" src="images/producto-12.png"/>
+</div>
+<div class="grid-2 mt-48">
+<div class="card"><p class="card__name">Cera de Abeja 50 g</p><p class="card__desc">Cera natural de origen apícola, apta para múltiples usos artesanales y cosméticos.</p></div>
+<div class="card"><p class="card__name">Velas Artesanales</p><p class="card__desc">Elaboradas totalmente con cera virgen. Mayor vida útil y aroma natural duradero.</p></div>
+</div>
+</div>
+</div>
+<div class="pets-banner">
+<div class="pets-banner__img">
+<img alt="Línea para mascotas" src="images/producto-13.png"/>
+</div>
+<div class="pets-banner__body">
+<p class="pets-banner__label">Línea especial</p>
+<h2 class="pets-banner__title">Cuidado para<br/>Mascotas</h2>
+<p class="pets-banner__desc">Productos formulados para respetar el pH natural de las mascotas (entre 6,3 y 7,1). Sin alcohol, con esencias naturales y aguas floridas (hidrolatos).</p>
+<div class="pets-banner__products">
+<span class="pets-banner__tag">Shampú</span>
+<span class="pets-banner__tag">Shampú Seco</span>
+<span class="pets-banner__tag">Perfume</span>
+<span class="pets-banner__tag">Desodorante</span>
+</div>
+</div>
+</div>
+<div class="chapter">
+<span class="chapter__num">12</span>
+<div class="chapter__info">
+<p class="chapter__cat">Bienestar y cuidado</p>
+<h2 class="chapter__title">Otros Productos</h2>
+</div>
+</div>
+<div class="section">
+<div class="grid-2">
+<div class="card-photo">
+<img alt="Protector solar" src="images/producto-14.png"/>
+<div class="card-photo__body">
+<p class="card-photo__name">Protector Solar</p>
+<p class="card-photo__desc">Elaborado con cera de abeja, aceite de coco y óxido de zinc. Para proteger el rostro de los rayos UV durante todo el año.</p>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:2px">
+<div class="card" style="flex:1"><p class="card__name">Caramelos de Miel y Propóleo</p><p class="card__desc">Elaborados con miel cruda y propóleo. Para el cuidado de la garganta.</p></div>
+<div class="card" style="flex:1"><p class="card__name">Propóleo</p><p class="card__desc">Usos tradicionales vinculados al cuidado respiratorio, cutáneo y bucal.</p></div>
+<div class="card" style="flex:1"><p class="card__name">Gel de Jarilla y Árnica</p><p class="card__desc">Para dolores musculares y articulares, golpes y contusiones. Posee un aroma agradable.</p></div>
+</div>
+</div>
+</div>
+<div class="back-cover">
+<div class="back-cover__img">
+<img alt="Hierbas naturales NADUR" src="images/producto-15.jpg"/>
+</div>
+<div class="back-cover__body">
+<p class="back-cover__label">Pedidos y consultas</p>
+<h2 class="back-cover__tagline">La naturaleza<br/>en tu hogar,<br/>cada día.</h2>
+<div class="back-cover__rule"></div>
+<p class="back-cover__contact">1131252112</p>
+<p class="back-cover__name">ROXANA · NADUR</p>
+</div>
+</div>
+</body>
+</html>
